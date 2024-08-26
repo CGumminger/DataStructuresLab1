@@ -45,7 +45,15 @@ assert sum_of_evens([7, 8, 9, 10]) == 18
 
 #5. Write a recursive function fibonacci(n) that returns the nth Fibonacci number. Without recursion. Must use loop.
 def fibonacci(n):
-    # Your code here
+    if n == 0:
+        return 0
+    oneBefore = 1
+    current = 1
+    for x in range(n-2):
+        temp = current
+        current = current + oneBefore
+        oneBefore = temp
+    return current   
 
 assert fibonacci(5) == 5
 assert fibonacci(10) == 55
