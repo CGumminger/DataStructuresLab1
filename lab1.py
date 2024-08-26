@@ -3,20 +3,30 @@
 
 #1. Write a function reverse_and_uppercase(input_str) that takes a string, reverses it, and converts it to uppercase.
 def reverse_and_uppercase(input_str):
-    # Your code here
+    s = input_str[::-1]
+    return s.upper()
 
 assert reverse_and_uppercase("hello") == "OLLEH"
 assert reverse_and_uppercase("DataStructures") == "SERUTCURTSATAD"
 
 #2. Write a function basic_operations(a, b) that returns a tuple containing the sum, difference, product, and quotient of a and b.
 def basic_operations(a, b):
-    # Your code here
+    w = a+b
+    x = a-b
+    y = a*b
+    z = a/b
+    return (w, x, y, z)
 
 assert basic_operations(10, 2) == (12, 8, 20, 5)
 
 #3. Write a function check_sign(number) that returns "Positive", "Negative", or "Zero" based on the input number.
 def check_sign(number):
-    # Your code here
+    if number>0:
+        return "Positive"
+    elif number<0:
+        return "Negative"
+    else:
+        return "Zero"
 
 assert check_sign(5) == "Positive"
 assert check_sign(-3) == "Negative"
@@ -24,7 +34,11 @@ assert check_sign(0) == "Zero"
 
 #4. Write a function sum_of_evens(numbers) that returns the sum of all even numbers in a list.
 def sum_of_evens(numbers):
-    # Your code here
+    total = 0
+    for x in numbers:
+        if x%2 == 0:
+            total +=x
+    return total
 
 assert sum_of_evens([1, 2, 3, 4, 5, 6]) == 12
 assert sum_of_evens([7, 8, 9, 10]) == 18
