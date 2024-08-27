@@ -59,8 +59,55 @@ assert fibonacci(5) == 5
 assert fibonacci(10) == 55
 
 #6. Write a function parse_and_calculate(expression) that takes a mathematical expression in string format (e.g., "3+5*2-4/2") and returns the result. Handle the operations with the correct order of precedence.
+
+def multiply(x,y):
+    return str(x*y)
+
+def divide(x,y):
+    return str(int((x/y)))
+
+def add(x,y):
+    return str(x+y)
+
+def subtract(x,y):
+    return str(x-y)
+
 def parse_and_calculate(expression):
-    # Your code here
+    multiplyAndDivide = True
+    addAndSubtract = True
+    while multiplyAndDivide == True:
+        if ("*" in expression or "/" in expression):
+            index=0
+            for c in expression:
+                if c=="*":
+                    s = multiply(int(expression[index-1]), int(expression[index+1]))
+                    expression = expression[:index-1] + s + expression[index+2:]
+                    break
+                elif c=="/":
+                    s = divide(int(expression[index-1]), int(expression[index+1]))
+                    expression = expression[:index-1] + s + expression[index+2:]
+                    break
+                else:
+                    index+=1
+        else:
+            multiplyAndDivide = False
+    while addAndSubtract == True:
+        if ("+" in expression or "-" in expression):
+            index=0
+            for c in expression:
+                if c=="+":
+                    s = add(int(expression[index-1]), int(expression[index+1]))
+                    expression = expression[:index-1] + s + expression[index+2:]
+                    break
+                elif c=="-":
+                    s = subtract(int(expression[index-1]), int(expression[index+1]))
+                    expression = expression[:index-1] + s + expression[index+2:]
+                    break
+                else:
+                    index+=1
+        else:
+            addAndSubtract = False
+    return int(expression)
 
 assert parse_and_calculate("3+5*2-4/2") == 10
 assert parse_and_calculate("10-3*2+8/4") == 6
