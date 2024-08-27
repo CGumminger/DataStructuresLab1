@@ -80,17 +80,37 @@ def subtract(x,y):
 def parse_and_calculate(expression):
     multiplyAndDivide = True
     addAndSubtract = True
+    fullNumLeft = False
+    fullNumRight = False
     while multiplyAndDivide == True:
         if ("*" in expression or "/" in expression):
             index=0
             for c in expression:
                 if c=="*":
-                    s = multiply(int(expression[index-1]), int(expression[index+1]))
-                    expression = expression[:index-1] + s + expression[index+2:]
+                    while fullNumLeft==False:
+                        if index-left == 0:
+                            fullNumLeft = True
+                        elif expression[index-left].isdigit():
+                            left += 1
+                        else:
+                            if left!=1: 
+                                left -= 1
+                            fullNumLeft = True
+                    s = multiply(int(expression[index-left:index]), int(expression[index+1]))
+                    expression = expression[:index-left] + s + expression[index+2:]
                     break
                 elif c=="/":
-                    s = divide(int(expression[index-1]), int(expression[index+1]))
-                    expression = expression[:index-1] + s + expression[index+2:]
+                    while fullNumLeft==False:
+                        if index-left == 0:
+                            fullNumLeft = True
+                        elif expression[index-left].isdigit():
+                            left += 1
+                        else:
+                            if left!=1: 
+                                left -= 1
+                            fullNumLeft = True
+                    s = divide(int(expression[index-left:index]), int(expression[index+1]))
+                    expression = expression[:index-left] + s + expression[index+2:]
                     break
                 else:
                     index+=1
@@ -116,8 +136,17 @@ def parse_and_calculate(expression):
                     expression = expression[:index-left] + s + expression[index+2:]
                     break
                 elif c=="-":
-                    s = subtract(int(expression[index-1]), int(expression[index+1]))
-                    expression = expression[:index-1] + s + expression[index+2:]
+                    while fullNumLeft==False:
+                        if index-left == 0:
+                            fullNumLeft = True
+                        elif expression[index-left].isdigit():
+                            left += 1
+                        else:
+                            if left!=1: 
+                                left -= 1
+                            fullNumLeft = True
+                    s = subtract(int(expression[index-left:index]), int(expression[index+1]))
+                    expression = expression[:index-left] + s + expression[index+2:]
                     break
                 else:
                     index+=1
