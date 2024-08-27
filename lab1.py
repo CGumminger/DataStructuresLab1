@@ -77,6 +77,18 @@ def add(x,y):
 def subtract(x,y):
     return str(x-y)
 
+def getRightNumber(exp, i):
+    temp = i+1
+    while(temp<len(exp) and exp[temp].isdigit()):
+        temp+=1
+    return temp
+
+def getLeftNumber(exp, i):
+    temp = i-1
+    while(temp>=0 and exp[temp].isdigit()):
+        temp-=1
+    return temp
+
 def parse_and_calculate(expression):
     multiplyAndDivide = True
     addAndSubtract = True
@@ -87,30 +99,12 @@ def parse_and_calculate(expression):
             index=0
             for c in expression:
                 if c=="*":
-                    while fullNumLeft==False:
-                        if index-left == 0:
-                            fullNumLeft = True
-                        elif expression[index-left].isdigit():
-                            left += 1
-                        else:
-                            if left!=1: 
-                                left -= 1
-                            fullNumLeft = True
-                    s = multiply(int(expression[index-left:index]), int(expression[index+1]))
-                    expression = expression[:index-left] + s + expression[index+2:]
+                    s = multiply(int(expression[index-1]), int(expression[index+1]))
+                    expression = expression[:index-1] + s + expression[index+2:]
                     break
                 elif c=="/":
-                    while fullNumLeft==False:
-                        if index-left == 0:
-                            fullNumLeft = True
-                        elif expression[index-left].isdigit():
-                            left += 1
-                        else:
-                            if left!=1: 
-                                left -= 1
-                            fullNumLeft = True
-                    s = divide(int(expression[index-left:index]), int(expression[index+1]))
-                    expression = expression[:index-left] + s + expression[index+2:]
+                    s = divide(int(expression[index-1]), int(expression[index+1]))
+                    expression = expression[:index-1] + s + expression[index+2:]
                     break
                 else:
                     index+=1
@@ -123,36 +117,22 @@ def parse_and_calculate(expression):
             right = 1
             for c in expression:
                 if c=="+":
-                    while fullNumLeft==False:
-                        if index-left == 0:
-                            fullNumLeft = True
-                        elif expression[index-left].isdigit():
-                            left += 1
-                        else:
-                            if left!=1: 
-                                left -= 1
-                            fullNumLeft = True
-                    s = add(int(expression[index-left:index]), int(expression[index+1]))
-                    expression = expression[:index-left] + s + expression[index+2:]
+                    left = getLeftNumber(expression, index)
+                    right = getRightNumber(expression,index)
+                    s = add(int(expression[left+1:index]),int(expression[index+1:right]))
+                    expression = expression[left:index-1] + str(s) + expression[right:]
                     break
                 elif c=="-":
-                    while fullNumLeft==False:
-                        if index-left == 0:
-                            fullNumLeft = True
-                        elif expression[index-left].isdigit():
-                            left += 1
-                        else:
-                            if left!=1: 
-                                left -= 1
-                            fullNumLeft = True
-                    s = subtract(int(expression[index-left:index]), int(expression[index+1]))
-                    expression = expression[:index-left] + s + expression[index+2:]
+                    left = getLeftNumber(expression, index)
+                    right = getRightNumber(expression,index)
+                    s = subtract(int(expression[left+1:index]), int(expression[index+1:right]))
+                    expression = expression[left:index-1] + str(s) + expression[right:]
                     break
                 else:
                     index+=1
         else:
             addAndSubtract = False
     return int(expression)
-
-assert parse_and_calculate("3+5*2-4/2") == 10
+    
+assert parse_and_calculate("3+5*2-4/2") == 11
 assert parse_and_calculate("10-3*2+8/4") == 6
