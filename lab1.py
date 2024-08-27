@@ -99,12 +99,17 @@ def parse_and_calculate(expression):
             index=0
             for c in expression:
                 if c=="*":
-                    s = multiply(int(expression[index-1]), int(expression[index+1]))
-                    expression = expression[:index-1] + s + expression[index+2:]
+                    left = getLeftNumber(expression, index)
+                    right = getRightNumber(expression,index)
+                    s = multiply(int(expression[left+1:index]),int(expression[index+1:right]))
+                    expression = expression[:left+1] + str(s) + expression[right:]
+                    print(expression)
                     break
                 elif c=="/":
-                    s = divide(int(expression[index-1]), int(expression[index+1]))
-                    expression = expression[:index-1] + s + expression[index+2:]
+                    left = getLeftNumber(expression, index)
+                    right = getRightNumber(expression,index)
+                    s = divide(int(expression[left+1:index]),int(expression[index+1:right]))
+                    expression = expression[:left+1] + str(s) + expression[right:]
                     break
                 else:
                     index+=1
@@ -120,13 +125,13 @@ def parse_and_calculate(expression):
                     left = getLeftNumber(expression, index)
                     right = getRightNumber(expression,index)
                     s = add(int(expression[left+1:index]),int(expression[index+1:right]))
-                    expression = expression[left:index-1] + str(s) + expression[right:]
+                    expression = expression[:left+1] + str(s) + expression[right:]
                     break
                 elif c=="-":
                     left = getLeftNumber(expression, index)
                     right = getRightNumber(expression,index)
                     s = subtract(int(expression[left+1:index]), int(expression[index+1:right]))
-                    expression = expression[left:index-1] + str(s) + expression[right:]
+                    expression = expression[:left+1] + str(s) + expression[right:]
                     break
                 else:
                     index+=1
