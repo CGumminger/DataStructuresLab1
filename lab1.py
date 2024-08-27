@@ -103,7 +103,6 @@ def parse_and_calculate(expression):
                     right = getRightNumber(expression,index)
                     s = multiply(int(expression[left+1:index]),int(expression[index+1:right]))
                     expression = expression[:left+1] + str(s) + expression[right:]
-                    print(expression)
                     break
                 elif c=="/":
                     left = getLeftNumber(expression, index)
