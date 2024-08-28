@@ -92,8 +92,6 @@ def getLeftNumber(exp, i):
 def parse_and_calculate(expression):
     multiplyAndDivide = True
     addAndSubtract = True
-    fullNumLeft = False
-    fullNumRight = False
     while multiplyAndDivide == True:
         if ("*" in expression or "/" in expression):
             index=0
@@ -117,8 +115,6 @@ def parse_and_calculate(expression):
     while addAndSubtract == True:
         if ("+" in expression or "-" in expression):
             index = 0
-            left = 1
-            right = 1
             for c in expression:
                 if c=="+":
                     left = getLeftNumber(expression, index)
