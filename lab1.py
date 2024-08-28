@@ -13,11 +13,11 @@ assert reverse_and_uppercase("DataStructures") == "SERUTCURTSATAD"
 #2. Write a function basic_operations(a, b) that returns a tuple containing the sum, difference, product, and quotient of a and b.
 
 def basic_operations(a, b):
-    w = a+b
-    x = a-b
-    y = a*b
-    z = a/b
-    return (w, x, y, z)
+    if b != 0:
+        x = a/b
+    else:
+        x = "Divide by zero error"
+    return (a+b, a-b, a*b, x)
 
 assert basic_operations(10, 2) == (12, 8, 20, 5)
 
